@@ -2,11 +2,13 @@ package com.picnic.sample;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements OnApiListener{
 
     ListView lv;
 
@@ -25,6 +27,9 @@ public class MainActivity extends Activity {
  
         lv.setAdapter(adapter);
         
+        
+        searchAsyncTask task = new searchAsyncTask(this);
+        task.execute();
     }
 
     @Override
@@ -32,6 +37,18 @@ public class MainActivity extends Activity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+
+    /* (non-Javadoc)
+     * @see com.picnic.sample.OnApiListener#onSuccess(java.lang.String)
+     */
+    @Override
+    public void onSuccess(String result) {
+
+
+        TextView tv = (TextView) findViewById(R.id.textView1);
+        tv.setText(result);
+
     }
 
 }
