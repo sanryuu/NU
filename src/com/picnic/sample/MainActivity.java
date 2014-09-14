@@ -1,32 +1,40 @@
 package com.picnic.sample;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 public class MainActivity extends Activity implements OnApiListener{
 
-    ListView lv;
+    ListView mLv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+
+        // デフォルトのリストに表示する人を追加
         String[] members = { "mhidaka", "rongon_xp", "kacchi0516", "kobashinG",
                 "seit", "kei_i_t", "furusin_oriver" };
          
-        lv = (ListView) findViewById(R.id.nearFriend);
+        mLv = (ListView) findViewById(R.id.nearFriend);
  
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_expandable_list_item_1, members);
  
-        lv.setAdapter(adapter);
-        
+        mLv.setAdapter(adapter);
         
         searchAsyncTask task = new searchAsyncTask(this);
         task.execute();
@@ -45,9 +53,27 @@ public class MainActivity extends Activity implements OnApiListener{
     @Override
     public void onSuccess(String result) {
 
+        
+        // http://techbooster.jpn.org/andriod/application/1645/
+        
+        List<String> list = new ArrayList<String>();
 
-        TextView tv = (TextView) findViewById(R.id.textView1);
-        tv.setText(result);
+        try {
+            JSONArray rootArray;
+            rootArray = new JSONArray(result);
+
+            for (int i = 0; i < rootArray.length(); i++) {
+                JSONObject jsonObject = rootArray.getJSONObject(i);
+                Log.d("JSONampleActivity", jsonObject.getString("uid"));
+                list.add(jsonObject.getString("uid"));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_expandable_list_item_1, list);
+        mLv.setAdapter(adapter);
 
     }
 
