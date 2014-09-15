@@ -9,12 +9,9 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 public class MainActivity extends Activity implements OnApiListener{
 
@@ -36,8 +33,8 @@ public class MainActivity extends Activity implements OnApiListener{
  
         mLv.setAdapter(adapter);
         
-        searchAsyncTask task = new searchAsyncTask(this);
-        task.execute();
+//        searchAsyncTask task = new searchAsyncTask(this);
+//        task.execute();
     }
 
     @Override
@@ -53,6 +50,7 @@ public class MainActivity extends Activity implements OnApiListener{
     @Override
     public void onSuccess(String result) {
 
+//        Log.d("JSONampleActivity", result);
         
         // http://techbooster.jpn.org/andriod/application/1645/
         
@@ -64,8 +62,7 @@ public class MainActivity extends Activity implements OnApiListener{
 
             for (int i = 0; i < rootArray.length(); i++) {
                 JSONObject jsonObject = rootArray.getJSONObject(i);
-                Log.d("JSONampleActivity", jsonObject.getString("uid"));
-                list.add(jsonObject.getString("uid"));
+                list.add(jsonObject.getString("created_at"));
             }
         } catch (JSONException e) {
             e.printStackTrace();
