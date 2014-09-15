@@ -29,7 +29,7 @@ public class searchAsyncTask extends AsyncTask<String, Integer, String>{
  @Override
  protected String doInBackground(String... params) {
 
-     String url = "http://picnic.mydns.jp:3000/match/search";
+     String url = "http://picnic.mydns.jp:3001/stub/search";
      DefaultHttpClient client = new DefaultHttpClient();
      HttpUriRequest method = new HttpGet(url);
      HttpResponse response = null;

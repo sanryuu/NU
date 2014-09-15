@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 public class MainActivity extends Activity implements OnApiListener{
@@ -33,8 +34,8 @@ public class MainActivity extends Activity implements OnApiListener{
  
         mLv.setAdapter(adapter);
         
-//        searchAsyncTask task = new searchAsyncTask(this);
-//        task.execute();
+        searchAsyncTask task = new searchAsyncTask(this);
+        task.execute();
     }
 
     @Override
@@ -53,6 +54,8 @@ public class MainActivity extends Activity implements OnApiListener{
 //        Log.d("JSONampleActivity", result);
         
         // http://techbooster.jpn.org/andriod/application/1645/
+        // Button button = (Button) findViewById(R.id.button1);
+        // button.setText(result);
         
         List<String> list = new ArrayList<String>();
 
@@ -62,7 +65,7 @@ public class MainActivity extends Activity implements OnApiListener{
 
             for (int i = 0; i < rootArray.length(); i++) {
                 JSONObject jsonObject = rootArray.getJSONObject(i);
-                list.add(jsonObject.getString("created_at"));
+                list.add(jsonObject.getString("uid"));
             }
         } catch (JSONException e) {
             e.printStackTrace();
